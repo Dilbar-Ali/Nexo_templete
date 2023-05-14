@@ -11,6 +11,7 @@ import {
   BsCodeSquare,
   BsIntersect,
 } from "react-icons/bs";
+import Cards from "../Cards/Cards";
 const Hero = () => {
   return (
     <>
@@ -100,6 +101,7 @@ const Hero = () => {
     </section>
     <section>
     <Trading/>
+    <Cards/>
     </section>
     </>
   );
