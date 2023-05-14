@@ -4,7 +4,8 @@ import Slider from '../slider/Slider';
 import Counting from "../Counting/Counting";
 import Trading from "../Trading/Trading";
 import Hero_img from "../../../src/assets/nexo-app@2x.png";
-import Features from "../../components/Features/Features"
+import Features from "../../components/Features/Features";
+import Platform from '../../components/Platform/Platform';
 import {
   BsApple,
   BsGooglePlay,
@@ -104,6 +105,7 @@ const Hero = () => {
     <Trading/>
     <Cards/>
     <Features/>
+    <Platform/>
     </section>
     </>
   );
