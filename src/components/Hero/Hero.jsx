@@ -1,6 +1,8 @@
 import Button from "../Button";
 import Navbar from "../Navbar/Navbar";
 import Slider from '../slider/Slider';
+import Counting from "../Counting/Counting";
+import Trading from "../Trading/Trading";
 import Hero_img from "../../../src/assets/nexo-app@2x.png";
 import {
   BsApple,
@@ -87,11 +89,17 @@ const Hero = () => {
       </div>
     </section>
 
-    <section className="z-50">
+    <section >
       <div>
       <Slider/>
       
       </div>
+    </section>
+    <section>
+      <Counting/>
+    </section>
+    <section>
+    <Trading/>
     </section>
     </>
   );

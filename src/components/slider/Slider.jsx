@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../Button";
 import Slide1img from "../../assets/slider-buy-us@2x.png";
+import Slide2img from "../../assets/slider-borrow.png";
+import Slide3img from "../../assets/slider-card.png";
 import Slide1bg from "../../assets/slider-background-01.jpg";
 // Import Swiper styles
 import "swiper/css";
@@ -15,7 +17,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
 
 const Slider = () => {
-  const progressCircle = useRef(null);
+  // const progressCircle = useRef(null);
   const progressContent = useRef(null);
   const onAutoplayTimeLeft = (s, time, progress) => {
     progressCircle.current.style.setProperty("--progress", 1 - progress);
@@ -24,7 +26,7 @@ const Slider = () => {
   return (
     <>
       <div className=" bg-gray-100 p-4 rounded-t-md w-[69.5%] m-auto relative -mt-20">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-7">
           <div>
             <Button />
           </div>
@@ -35,21 +37,24 @@ const Slider = () => {
             <Button />
           </div>
         </div>
+        
       </div>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 3500,
           disableOnInteraction: false,
         }}
         pagination={{
           clickable: true,
+          type: "progressbar",
+          
         }}
         navigation={false}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        className="mySwiper"
+        className="mySwiper w-[69.5%]"
       >
         <SwiperSlide className="">
           <div className="w-full z-50 ">
@@ -114,7 +119,7 @@ const Slider = () => {
                 </div>
               </div>
               <div className="h-96 w-96">
-                <img src={Slide1img} alt="" />
+                <img src={Slide2img} alt="" />
               </div>
             </div>
           </div>
@@ -148,7 +153,7 @@ const Slider = () => {
                 </div>
               </div>
               <div className="h-96 w-96">
-                <img src={Slide1img} alt="" />
+                <img src={Slide3img} alt="" />
               </div>
             </div>
           </div>
