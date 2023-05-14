@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../Button";
-
+import Slide1img from "../../assets/slider-buy-us@2x.png";
+import Slide1bg from "../../assets/slider-background-01.jpg";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -22,6 +23,19 @@ const Slider = () => {
   };
   return (
     <>
+      <div className=" bg-gray-100 p-4 rounded-t-md w-[69.5%] m-auto relative -mt-20">
+        <div className="flex items-center justify-center">
+          <div>
+            <Button />
+          </div>
+          <div>
+            <Button />
+          </div>
+          <div>
+            <Button />
+          </div>
+        </div>
+      </div>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -37,30 +51,108 @@ const Slider = () => {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         className="mySwiper"
       >
-        
-
-        <SwiperSlide >
-          <div> 
-            <div className="">
-              <h4 className="text-gray-400  text-sm">THE RIGHT PLACE TO</h4>
-              <h1 className="text-4xl font-bold">Buy Crypto in Seconds</h1>
-              <p className="text-gray-400">
-                Buy 60+ digital assets in seconds with card or instant bank
-                transfer. Get up to 0.5% in crypto rewards on your purchase.
-              </p>
-              <div className="flex gap-3">
-                <div>
-                  <Button />
+        <SwiperSlide className="">
+          <div className="w-full z-50 ">
+            <div
+              className="w-min mx-auto rounded-b-lg p-9  flex justify-center items-center"
+              style={{
+                backgroundImage: `url(${Slide1bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className=" leading-loose ">
+                <h4 className="text-blue-700  text-sm">THE RIGHT PLACE TO</h4>
+                <h1 className="text-2xl font-semibold">
+                  Buy Crypto in Seconds
+                </h1>
+                <p className="text-gray-400 w-96">
+                  Buy 60+ digital assets in seconds with card or instant bank
+                  transfer. Get up to 0.5% in crypto rewards on your purchase.
+                </p>
+                <div className="flex gap-3  mt-5">
+                  <div>
+                    <Button />
+                  </div>
+                  <div>
+                    <Button />
+                  </div>
                 </div>
-                <div>
-                  <Button />
-                </div>
+              </div>
+              <div className="h-96 w-96">
+                <img src={Slide1img} alt="" />
               </div>
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-       
+        <SwiperSlide className="">
+          <div className="w-full z-50 ">
+            <div
+              className="w-min mx-auto rounded-b-lg p-9  flex justify-center items-center"
+              style={{
+                backgroundImage: `url(${Slide1bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className=" leading-loose ">
+                <h4 className="text-blue-700  text-sm">THE RIGHT PLACE TO</h4>
+                <h1 className="text-2xl font-semibold">
+                  Buy Crypto in Seconds
+                </h1>
+                <p className="text-gray-400 w-96">
+                  Buy 60+ digital assets in seconds with card or instant bank
+                  transfer. Get up to 0.5% in crypto rewards on your purchase.
+                </p>
+                <div className="flex gap-3  mt-5">
+                  <div>
+                    <Button />
+                  </div>
+                  <div>
+                    <Button />
+                  </div>
+                </div>
+              </div>
+              <div className="h-96 w-96">
+                <img src={Slide1img} alt="" />
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="">
+          <div className="w-full z-50 ">
+            <div
+              className="w-min mx-auto rounded-b-lg p-9  flex justify-center items-center"
+              style={{
+                backgroundImage: `url(${Slide1bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className=" leading-loose ">
+                <h4 className="text-blue-700  text-sm">THE RIGHT PLACE TO</h4>
+                <h1 className="text-2xl font-semibold">
+                  Buy Crypto in Seconds
+                </h1>
+                <p className="text-gray-400 w-96">
+                  Buy 60+ digital assets in seconds with card or instant bank
+                  transfer. Get up to 0.5% in crypto rewards on your purchase.
+                </p>
+                <div className="flex gap-3  mt-5">
+                  <div>
+                    <Button />
+                  </div>
+                  <div>
+                    <Button />
+                  </div>
+                </div>
+              </div>
+              <div className="h-96 w-96">
+                <img src={Slide1img} alt="" />
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
       </Swiper>
     </>
   );

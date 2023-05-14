@@ -12,7 +12,7 @@ import {
 const Hero = () => {
   return (
     <>
-    <section className="h-full bg-blue-800 font-[Poppins] md:bg-top bg-center">
+    <section className="h-full relative z-0  bg-blue-800 font-[Poppins] md:bg-top bg-center">
       <Navbar />
       <div className="flex items-center justify-center ">
         <div className="leading-loose">
@@ -87,8 +87,11 @@ const Hero = () => {
       </div>
     </section>
 
-    <section>
+    <section className="z-50">
+      <div>
       <Slider/>
+      
+      </div>
     </section>
     </>
   );
