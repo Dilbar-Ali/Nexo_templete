@@ -13,7 +13,7 @@
     "react-icons": "^4.8.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.2.1",
-    "swiper": "^8.1.1"
+    "swiper": "^8.4.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

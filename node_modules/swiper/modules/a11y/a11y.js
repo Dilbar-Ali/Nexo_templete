@@ -1,11 +1,10 @@
 import classesToSelector from '../../shared/classes-to-selector.js';
 import $ from '../../shared/dom.js';
-export default function A11y(_ref) {
-  let {
-    swiper,
-    extendParams,
-    on
-  } = _ref;
+export default function A11y({
+  swiper,
+  extendParams,
+  on
+}) {
   extendParams({
     a11y: {
       enabled: true,
@@ -23,6 +22,9 @@ export default function A11y(_ref) {
       id: null
     }
   });
+  swiper.a11y = {
+    clicked: false
+  };
   let liveRegion = null;
 
   function notify(message) {
@@ -32,11 +34,7 @@ export default function A11y(_ref) {
     notification.html(message);
   }
 
-  function getRandomNumber(size) {
-    if (size === void 0) {
-      size = 16;
-    }
-
+  function getRandomNumber(size = 16) {
     const randomChar = () => Math.round(16 * Math.random()).toString(16);
 
     return 'x'.repeat(size).replace(/x/g, randomChar);
@@ -187,16 +185,62 @@ export default function A11y(_ref) {
     addElControls($el, wrapperId);
   };
 
+  const handlePointerDown = () => {
+    swiper.a11y.clicked = true;
+  };
+
+  const handlePointerUp = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!swiper.destroyed) {
+          swiper.a11y.clicked = false;
+        }
+      });
+    });
+  };
+
   const handleFocus = e => {
+    if (swiper.a11y.clicked) return;
     const slideEl = e.target.closest(`.${swiper.params.slideClass}`);
     if (!slideEl || !swiper.slides.includes(slideEl)) return;
     const isActive = swiper.slides.indexOf(slideEl) === swiper.activeIndex;
     const isVisible = swiper.params.watchSlidesProgress && swiper.visibleSlides && swiper.visibleSlides.includes(slideEl);
     if (isActive || isVisible) return;
+    if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
+
+    if (swiper.isHorizontal()) {
+      swiper.el.scrollLeft = 0;
+    } else {
+      swiper.el.scrollTop = 0;
+    }
+
     swiper.slideTo(swiper.slides.indexOf(slideEl), 0);
   };
 
-  function init() {
+  const initSlides = () => {
+    const params = swiper.params.a11y;
+
+    if (params.itemRoleDescriptionMessage) {
+      addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
+    }
+
+    if (params.slideRole) {
+      addElRole($(swiper.slides), params.slideRole);
+    }
+
+    const slidesLength = swiper.params.loop ? swiper.slides.filter(el => !el.classList.contains(swiper.params.slideDuplicateClass)).length : swiper.slides.length;
+
+    if (params.slideLabelMessage) {
+      swiper.slides.each((slideEl, index) => {
+        const $slideEl = $(slideEl);
+        const slideIndex = swiper.params.loop ? parseInt($slideEl.attr('data-swiper-slide-index'), 10) : index;
+        const ariaLabelMessage = params.slideLabelMessage.replace(/\{\{index\}\}/, slideIndex + 1).replace(/\{\{slidesLength\}\}/, slidesLength);
+        addElLabel($slideEl, ariaLabelMessage);
+      });
+    }
+  };
+
+  const init = () => {
     const params = swiper.params.a11y;
     swiper.$el.append(liveRegion); // Container
 
@@ -217,18 +261,7 @@ export default function A11y(_ref) {
     addElId($wrapperEl, wrapperId);
     addElLive($wrapperEl, live); // Slide
 
-    if (params.itemRoleDescriptionMessage) {
-      addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
-    }
-
-    addElRole($(swiper.slides), params.slideRole);
-    const slidesLength = swiper.params.loop ? swiper.slides.filter(el => !el.classList.contains(swiper.params.slideDuplicateClass)).length : swiper.slides.length;
-    swiper.slides.each((slideEl, index) => {
-      const $slideEl = $(slideEl);
-      const slideIndex = swiper.params.loop ? parseInt($slideEl.attr('data-swiper-slide-index'), 10) : index;
-      const ariaLabelMessage = params.slideLabelMessage.replace(/\{\{index\}\}/, slideIndex + 1).replace(/\{\{slidesLength\}\}/, slidesLength);
-      addElLabel($slideEl, ariaLabelMessage);
-    }); // Navigation
+    initSlides(); // Navigation
 
     let $nextEl;
     let $prevEl;
@@ -256,7 +289,9 @@ export default function A11y(_ref) {
 
 
     swiper.$el.on('focus', handleFocus, true);
-  }
+    swiper.$el.on('pointerdown', handlePointerDown, true);
+    swiper.$el.on('pointerup', handlePointerUp, true);
+  };
 
   function destroy() {
     if (liveRegion && liveRegion.length > 0) liveRegion.remove();
@@ -286,6 +321,8 @@ export default function A11y(_ref) {
 
 
     swiper.$el.off('focus', handleFocus, true);
+    swiper.$el.off('pointerdown', handlePointerDown, true);
+    swiper.$el.off('pointerup', handlePointerUp, true);
   }
 
   on('beforeInit', () => {
@@ -294,6 +331,10 @@ export default function A11y(_ref) {
   on('afterInit', () => {
     if (!swiper.params.a11y.enabled) return;
     init();
+  });
+  on('slidesLengthChange snapGridLengthChange slidesGridLengthChange', () => {
+    if (!swiper.params.a11y.enabled) return;
+    initSlides();
   });
   on('fromEdge toEdge afterInit lock unlock', () => {
     if (!swiper.params.a11y.enabled) return;

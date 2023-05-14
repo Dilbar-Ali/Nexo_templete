@@ -1,13 +1,13 @@
+import $ from '../../shared/dom.js';
 import createShadow from '../../shared/create-shadow.js';
 import effectInit from '../../shared/effect-init.js';
 import effectTarget from '../../shared/effect-target.js';
 import effectVirtualTransitionEnd from '../../shared/effect-virtual-transition-end.js';
-export default function EffectFlip(_ref) {
-  let {
-    swiper,
-    extendParams,
-    on
-  } = _ref;
+export default function EffectFlip({
+  swiper,
+  extendParams,
+  on
+}) {
   extendParams({
     flipEffect: {
       slideShadows: true,
@@ -15,6 +15,37 @@ export default function EffectFlip(_ref) {
       transformEl: null
     }
   });
+
+  const createSlideShadows = ($slideEl, progress, params) => {
+    let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+    let shadowAfter = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+
+    if (shadowBefore.length === 0) {
+      shadowBefore = createShadow(params, $slideEl, swiper.isHorizontal() ? 'left' : 'top');
+    }
+
+    if (shadowAfter.length === 0) {
+      shadowAfter = createShadow(params, $slideEl, swiper.isHorizontal() ? 'right' : 'bottom');
+    }
+
+    if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
+    if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+  };
+
+  const recreateShadows = () => {
+    // Set shadows
+    const params = swiper.params.flipEffect;
+    swiper.slides.each(slideEl => {
+      const $slideEl = $(slideEl);
+      let progress = $slideEl[0].progress;
+
+      if (swiper.params.flipEffect.limitRotation) {
+        progress = Math.max(Math.min(slideEl.progress, 1), -1);
+      }
+
+      createSlideShadows($slideEl, progress, params);
+    });
+  };
 
   const setTranslate = () => {
     const {
@@ -50,20 +81,7 @@ export default function EffectFlip(_ref) {
       $slideEl[0].style.zIndex = -Math.abs(Math.round(progress)) + slides.length;
 
       if (params.slideShadows) {
-        // Set shadows
-        let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
-        let shadowAfter = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
-
-        if (shadowBefore.length === 0) {
-          shadowBefore = createShadow(params, $slideEl, swiper.isHorizontal() ? 'left' : 'top');
-        }
-
-        if (shadowAfter.length === 0) {
-          shadowAfter = createShadow(params, $slideEl, swiper.isHorizontal() ? 'right' : 'bottom');
-        }
-
-        if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
-        if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+        createSlideShadows($slideEl, progress, params);
       }
 
       const transform = `translate3d(${tx}px, ${ty}px, 0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -91,6 +109,8 @@ export default function EffectFlip(_ref) {
     on,
     setTranslate,
     setTransition,
+    recreateShadows,
+    getEffectParams: () => swiper.params.flipEffect,
     perspective: () => true,
     overwriteParams: () => ({
       slidesPerView: 1,

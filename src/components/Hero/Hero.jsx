@@ -1,5 +1,6 @@
 import Button from "../Button";
 import Navbar from "../Navbar/Navbar";
+import Slider from '../slider/Slider';
 import Hero_img from "../../../src/assets/nexo-app@2x.png";
 import {
   BsApple,
@@ -10,6 +11,7 @@ import {
 } from "react-icons/bs";
 const Hero = () => {
   return (
+    <>
     <section className="h-full bg-blue-800 font-[Poppins] md:bg-top bg-center">
       <Navbar />
       <div className="flex items-center justify-center ">
@@ -84,6 +86,11 @@ const Hero = () => {
         </div>
       </div>
     </section>
+
+    <section>
+      <Slider/>
+    </section>
+    </>
   );
 };
 

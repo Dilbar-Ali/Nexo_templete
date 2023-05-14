@@ -38,13 +38,9 @@ const prototypes = {
 const extendedDefaults = {};
 
 class Swiper {
-  constructor() {
+  constructor(...args) {
     let el;
     let params;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
 
     if (args.length === 1 && args[0].constructor && Object.prototype.toString.call(args[0]).slice(8, -1) === 'Object') {
       params = args[0];
@@ -63,7 +59,8 @@ class Swiper {
           el: containerEl
         });
         swipers.push(new Swiper(newParams));
-      });
+      }); // eslint-disable-next-line no-constructor-return
+
       return swipers;
     } // Swiper Instance
 
@@ -206,6 +203,7 @@ class Swiper {
     if (swiper.params.init) {
       swiper.init();
     } // Return app instance
+    // eslint-disable-next-line no-constructor-return
 
 
     return swiper;
@@ -257,6 +255,7 @@ class Swiper {
 
   getSlideClasses(slideEl) {
     const swiper = this;
+    if (swiper.destroyed) return '';
     return slideEl.className.split(' ').filter(className => {
       return className.indexOf('swiper-slide') === 0 || className.indexOf(swiper.params.slideClass) === 0;
     }).join(' ');
@@ -277,15 +276,7 @@ class Swiper {
     swiper.emit('_slideClasses', updates);
   }
 
-  slidesPerViewDynamic(view, exact) {
-    if (view === void 0) {
-      view = 'current';
-    }
-
-    if (exact === void 0) {
-      exact = false;
-    }
-
+  slidesPerViewDynamic(view = 'current', exact = false) {
     const swiper = this;
     const {
       params,
@@ -393,11 +384,7 @@ class Swiper {
     swiper.emit('update');
   }
 
-  changeDirection(newDirection, needUpdate) {
-    if (needUpdate === void 0) {
-      needUpdate = true;
-    }
-
+  changeDirection(newDirection, needUpdate = true) {
     const swiper = this;
     const currentDirection = swiper.params.direction;
 
@@ -425,6 +412,23 @@ class Swiper {
     return swiper;
   }
 
+  changeLanguageDirection(direction) {
+    const swiper = this;
+    if (swiper.rtl && direction === 'rtl' || !swiper.rtl && direction === 'ltr') return;
+    swiper.rtl = direction === 'rtl';
+    swiper.rtlTranslate = swiper.params.direction === 'horizontal' && swiper.rtl;
+
+    if (swiper.rtl) {
+      swiper.$el.addClass(`${swiper.params.containerModifierClass}rtl`);
+      swiper.el.dir = 'rtl';
+    } else {
+      swiper.$el.removeClass(`${swiper.params.containerModifierClass}rtl`);
+      swiper.el.dir = 'ltr';
+    }
+
+    swiper.update();
+  }
+
   mount(el) {
     const swiper = this;
     if (swiper.mounted) return true; // Find el
@@ -449,6 +453,10 @@ class Swiper {
         res.children = options => $el.children(options);
 
         return res;
+      }
+
+      if (!$el.children) {
+        return $($el).children(getWrapperSelector());
       }
 
       return $el.children(getWrapperSelector());
@@ -535,15 +543,7 @@ class Swiper {
     return swiper;
   }
 
-  destroy(deleteInstance, cleanStyles) {
-    if (deleteInstance === void 0) {
-      deleteInstance = true;
-    }
-
-    if (cleanStyles === void 0) {
-      cleanStyles = true;
-    }
-
+  destroy(deleteInstance = true, cleanStyles = true) {
     const swiper = this;
     const {
       params,

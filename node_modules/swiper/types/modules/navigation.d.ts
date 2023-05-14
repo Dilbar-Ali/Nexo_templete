@@ -37,9 +37,21 @@ export interface NavigationEvents {
    * Event will be fired on navigation show
    */
   navigationShow: (swiper: Swiper) => void;
+  /**
+   * Event will be fired on navigation prev button click
+   */
+  navigationPrev: (swiper: Swiper) => void;
+  /**
+   * Event will be fired on navigation next button click
+   */
+  navigationNext: (swiper: Swiper) => void;
 }
 
 export interface NavigationOptions {
+  /**
+   * Boolean property to use with breakpoints to enable/disable navigation on certain breakpoints
+   */
+  enabled?: boolean;
   /**
    * String with CSS selector or HTML element of the element that will work
    * like "next" button after click on it
@@ -83,4 +95,11 @@ export interface NavigationOptions {
    * @default 'swiper-button-lock'
    */
   lockClass?: string;
+
+  /**
+   * CSS class name added on swiper container when navigation is disabled by breakpoint
+   *
+   * @default 'swiper-navigation-disabled'
+   */
+  navigationDisabledClass?: string;
 }

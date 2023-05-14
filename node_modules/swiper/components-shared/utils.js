@@ -13,35 +13,19 @@ function extend(target, src) {
   });
 }
 
-function needsNavigation(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  return props.navigation && typeof props.navigation.nextEl === 'undefined' && typeof props.navigation.prevEl === 'undefined';
+function needsNavigation(params = {}) {
+  return params.navigation && typeof params.navigation.nextEl === 'undefined' && typeof params.navigation.prevEl === 'undefined';
 }
 
-function needsPagination(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  return props.pagination && typeof props.pagination.el === 'undefined';
+function needsPagination(params = {}) {
+  return params.pagination && typeof params.pagination.el === 'undefined';
 }
 
-function needsScrollbar(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  return props.scrollbar && typeof props.scrollbar.el === 'undefined';
+function needsScrollbar(params = {}) {
+  return params.scrollbar && typeof params.scrollbar.el === 'undefined';
 }
 
-function uniqueClasses(classNames) {
-  if (classNames === void 0) {
-    classNames = '';
-  }
-
+function uniqueClasses(classNames = '') {
   const classes = classNames.split(' ').map(c => c.trim()).filter(c => !!c);
   const unique = [];
   classes.forEach(c => {

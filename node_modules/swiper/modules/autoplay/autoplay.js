@@ -3,13 +3,12 @@
 /* eslint no-use-before-define: "off" */
 import { getDocument } from 'ssr-window';
 import { nextTick } from '../../shared/utils.js';
-export default function Autoplay(_ref) {
-  let {
-    swiper,
-    extendParams,
-    on,
-    emit
-  } = _ref;
+export default function Autoplay({
+  swiper,
+  extendParams,
+  on,
+  emit
+}) {
   let timeout;
   swiper.autoplay = {
     running: false,
@@ -28,6 +27,12 @@ export default function Autoplay(_ref) {
   });
 
   function run() {
+    if (!swiper.size) {
+      swiper.autoplay.running = false;
+      swiper.autoplay.paused = false;
+      return;
+    }
+
     const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
     let delay = swiper.params.autoplay.delay;
 

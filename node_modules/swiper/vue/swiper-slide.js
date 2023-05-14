@@ -1,5 +1,5 @@
 import { h, ref, onMounted, onUpdated, onBeforeUpdate, computed, onBeforeUnmount, provide } from 'vue';
-import { uniqueClasses } from './utils.js';
+import { uniqueClasses } from '../components-shared/utils.js';
 const SwiperSlide = {
   name: 'SwiperSlide',
   props: {
@@ -39,7 +39,7 @@ const SwiperSlide = {
     }
 
     onMounted(() => {
-      if (!swiperRef.value) return;
+      if (!swiperRef || !swiperRef.value) return;
       swiperRef.value.on('_slideClass', updateClasses);
       eventAttached = true;
     });

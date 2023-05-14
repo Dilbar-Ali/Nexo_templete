@@ -633,6 +633,13 @@ export interface SwiperOptions {
   loopedSlides?: number | null;
 
   /**
+   * When enabled then amount of duplicated slides will not exceed amount of original slides. Useful to disable and increase `loopedSlides` when you have a lot of slides per view and not sufficient amount of original slides
+   *
+   * @default true
+   */
+  loopedSlidesLimit?: boolean;
+
+  /**
    * Enable and loop mode will fill groups with insufficient number of slides with blank slides. Good to be used with `slidesPerGroup` parameter
    *
    * @default false
@@ -646,7 +653,7 @@ export interface SwiperOptions {
   loopPreventsSlide?: boolean;
 
   /**
-   * Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which are not required different layout and logic, like `slidesPerView`, `slidesPerGroup`, `spaceBetween`, `grid.rows`. Such parameters like `loop` and `effect` won't work
+   * Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which do not require different layout and logic, like `slidesPerView`, `slidesPerGroup`, `spaceBetween`, `grid.rows`. Such parameters like `loop` and `effect` won't work
    *
    * @example
    * ```js

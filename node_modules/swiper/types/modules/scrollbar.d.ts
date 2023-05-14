@@ -65,6 +65,10 @@ export interface ScrollbarEvents {
  */
 export interface ScrollbarOptions {
   /**
+   * Boolean property to use with breakpoints to enable/disable scrollbar on certain breakpoints
+   */
+  enabled?: boolean;
+  /**
    * String with CSS selector or HTML element of the container with scrollbar.
    *
    * @default null
@@ -112,4 +116,25 @@ export interface ScrollbarOptions {
    * @default 'swiper-scrollbar-drag'
    */
   dragClass?: string;
+
+  /**
+   * CSS class name added on swiper container and scrollbar element when scrollbar is disabled by breakpoint
+   *
+   * @default 'swiper-scrollbar-disabled'
+   */
+  scrollbarDisabledClass?: string;
+
+  /**
+   * CSS class name set to scrollbar in horizontal Swiper
+   *
+   * @default 'swiper-scrollbar-horizontal'
+   */
+  horizontalClass?: string;
+
+  /**
+   * CSS class name set to scrollbar in vertical Swiper
+   *
+   * @default 'swiper-scrollbar-vertical'
+   */
+  verticalClass?: string;
 }

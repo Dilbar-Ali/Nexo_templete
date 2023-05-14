@@ -1,16 +1,16 @@
 import { getWindow } from 'ssr-window';
-export default function History(_ref) {
-  let {
-    swiper,
-    extendParams,
-    on
-  } = _ref;
+export default function History({
+  swiper,
+  extendParams,
+  on
+}) {
   extendParams({
     history: {
       enabled: false,
       root: '',
       replaceState: false,
-      key: 'slides'
+      key: 'slides',
+      keepQuery: false
     }
   });
   let initialized = false;
@@ -62,6 +62,10 @@ export default function History(_ref) {
       value = `${key}/${value}`;
     }
 
+    if (swiper.params.history.keepQuery) {
+      value += location.search;
+    }
+
     const currentState = window.history.state;
 
     if (currentState && currentState.value === value) {
@@ -97,7 +101,7 @@ export default function History(_ref) {
 
   const setHistoryPopState = () => {
     paths = getPathValues(swiper.params.url);
-    scrollToSlide(swiper.params.speed, swiper.paths.value, false);
+    scrollToSlide(swiper.params.speed, paths.value, false);
   };
 
   const init = () => {

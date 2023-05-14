@@ -507,7 +507,15 @@ declare const Swiper: DefineComponent<
   /**
    * Event will be fired on navigation show
    */
-  navigationShow: (swiper: SwiperClass) => void;/**
+  navigationShow: (swiper: SwiperClass) => void;
+  /**
+   * Event will be fired on navigation prev button click
+   */
+  navigationPrev: (swiper: SwiperClass) => void;
+  /**
+   * Event will be fired on navigation next button click
+   */
+  navigationNext: (swiper: SwiperClass) => void;/**
    * Event will be fired after pagination rendered
    */
   paginationRender: (swiper: SwiperClass, paginationEl: HTMLElement) => void;

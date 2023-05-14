@@ -1,11 +1,10 @@
 import $ from '../../shared/dom.js';
 import effectInit from '../../shared/effect-init.js';
-export default function EffectCube(_ref) {
-  let {
-    swiper,
-    extendParams,
-    on
-  } = _ref;
+export default function EffectCube({
+  swiper,
+  extendParams,
+  on
+}) {
   extendParams({
     cubeEffect: {
       slideShadows: true,
@@ -14,6 +13,33 @@ export default function EffectCube(_ref) {
       shadowScale: 0.94
     }
   });
+
+  const createSlideShadows = ($slideEl, progress, isHorizontal) => {
+    let shadowBefore = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+    let shadowAfter = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+
+    if (shadowBefore.length === 0) {
+      shadowBefore = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
+      $slideEl.append(shadowBefore);
+    }
+
+    if (shadowAfter.length === 0) {
+      shadowAfter = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
+      $slideEl.append(shadowAfter);
+    }
+
+    if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
+    if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+  };
+
+  const recreateShadows = () => {
+    // create new ones
+    const isHorizontal = swiper.isHorizontal();
+    swiper.slides.each(slideEl => {
+      const progress = Math.max(Math.min(slideEl.progress, 1), -1);
+      createSlideShadows($(slideEl), progress, isHorizontal);
+    });
+  };
 
   const setTranslate = () => {
     const {
@@ -108,22 +134,7 @@ export default function EffectCube(_ref) {
       $slideEl.transform(transform);
 
       if (params.slideShadows) {
-        // Set shadows
-        let shadowBefore = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
-        let shadowAfter = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
-
-        if (shadowBefore.length === 0) {
-          shadowBefore = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
-          $slideEl.append(shadowBefore);
-        }
-
-        if (shadowAfter.length === 0) {
-          shadowAfter = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
-          $slideEl.append(shadowAfter);
-        }
-
-        if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
-        if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+        createSlideShadows($slideEl, progress, isHorizontal);
       }
     }
 
@@ -147,6 +158,7 @@ export default function EffectCube(_ref) {
 
     const zFactor = browser.isSafari || browser.isWebView ? -swiperSize / 2 : 0;
     $wrapperEl.transform(`translate3d(0px,0,${zFactor}px) rotateX(${swiper.isHorizontal() ? 0 : wrapperRotate}deg) rotateY(${swiper.isHorizontal() ? -wrapperRotate : 0}deg)`);
+    $wrapperEl[0].style.setProperty('--swiper-cube-translate-z', `${zFactor}px`);
   };
 
   const setTransition = duration => {
@@ -167,6 +179,8 @@ export default function EffectCube(_ref) {
     on,
     setTranslate,
     setTransition,
+    recreateShadows,
+    getEffectParams: () => swiper.params.cubeEffect,
     perspective: () => true,
     overwriteParams: () => ({
       slidesPerView: 1,

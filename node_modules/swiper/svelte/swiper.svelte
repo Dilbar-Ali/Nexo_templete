@@ -1,29 +1,25 @@
 <script>
-  import {
-    onMount,
-    onDestroy,
-    afterUpdate,
-    createEventDispatcher,
-    tick,
-    setContext,
-    beforeUpdate,
-  } from 'svelte';
-  import { getParams } from './get-params.js';
-  import { initSwiper, mountSwiper } from './init-swiper.js';
+  import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick, setContext } from 'svelte';
+  import Swiper from 'swiper';
+  import { getParams } from '../components-shared/get-params.js';
+  import { mountSwiper } from '../components-shared/mount-swiper.js';
   import {
     needsScrollbar,
     needsNavigation,
     needsPagination,
     uniqueClasses,
     extend,
-  } from './utils.js';
-  import { getChangedParams } from './get-changed-params.js';
-  import { updateSwiper } from './update-swiper.js';
+  } from '../components-shared/utils.js';
+  import { getChangedParams } from '../components-shared/get-changed-params.js';
+  import { updateSwiper } from '../components-shared/update-swiper.js';
 
   const dispatch = createEventDispatcher();
 
   let className = undefined;
   export { className as class };
+
+  export let tag = 'div';
+  export let wrapperTag = 'div';
 
   let containerClasses = 'swiper';
   let breakpointChanged = false;
@@ -77,7 +73,7 @@
   };
 
   swiperParams.onAny = (event, ...args) => {
-    dispatch(event, [args]);
+    dispatch(event, args);
   };
   Object.assign(swiperParams.on, {
     _beforeBreakpoint: onBeforeBreakpoint,
@@ -86,7 +82,7 @@
     },
   });
 
-  swiperInstance = initSwiper(swiperParams);
+  swiperInstance = new Swiper(swiperParams);
   setContext('swiper', swiperInstance);
   if (swiperInstance.virtual && swiperInstance.params.virtual.enabled) {
     const extendWith = {
@@ -155,12 +151,18 @@
   });
 </script>
 
-<div
+<svelte:element
+  this={tag}
   bind:this={swiperEl}
   class={uniqueClasses(`${containerClasses}${className ? ` ${className}` : ''}`)}
   {...restProps}
 >
   <slot name="container-start" />
+  <svelte:element this={wrapperTag} class="swiper-wrapper">
+    <slot name="wrapper-start" />
+    <slot {virtualData} />
+    <slot name="wrapper-end" />
+  </svelte:element>
   {#if needsNavigation(swiperParams)}
     <div bind:this={prevEl} class="swiper-button-prev" />
     <div bind:this={nextEl} class="swiper-button-next" />
@@ -171,10 +173,5 @@
   {#if needsPagination(swiperParams)}
     <div bind:this={paginationEl} class="swiper-pagination" />
   {/if}
-  <div class="swiper-wrapper">
-    <slot name="wrapper-start" />
-    <slot {virtualData} />
-    <slot name="wrapper-end" />
-  </div>
   <slot name="container-end" />
-</div>
+</svelte:element>
