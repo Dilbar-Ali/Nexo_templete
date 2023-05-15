@@ -25,20 +25,20 @@ const NavLinks = () => {
                   }`}
                 ></ion-icon>
               </span>
-              <span className="text-xl md:mt-1 md:ml-2  md:block hidden group-hover:rotate-180 group-hover:-mt-2">
-                <ion-icon name="chevron-down"></ion-icon>
+              <span className="text-xl md:mt-1 md:ml-2   md:block hidden group-hover:rotate-180 group-hover:-mt-2">
+                {/* <ion-icon name="chevron-down"></ion-icon> */}
               </span>
             </h1>
             {link.submenu && (
               <div>
-                <div className="absolute top-20 hidden group-hover:md:block hover:md:block">
+                <div className="absolute top-10  hidden group-hover:md:block hover:md:block">
                   <div className="py-3">
                     <div
                       className="w-4 h-4 left-3 absolute 
                     mt-1 bg-white rotate-45"
                     ></div>
                   </div>
-                  <div className="bg-white p-5 grid grid-cols-3 gap-10">
+                  <div className="bg-white rounded-md  p-5 grid grid-cols-3 gap-10">
                     {link.sublinks.map((mysublinks) => (
                       <div>
                         <h1 className="text-lg font-semibold">
