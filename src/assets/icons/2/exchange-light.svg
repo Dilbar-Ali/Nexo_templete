@@ -1,0 +1,31 @@
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.11226 20.5292L5.04328 26.1146C4.66965 26.6275 4.78064 27.3516 5.32524 27.6773C10.8207 30.9635 18.0152 29.572 21.8589 24.2958C24.8627 20.1726 24.981 14.8289 22.5924 10.6748L13.2698 23.4717C12.8961 23.9846 12.1729 24.101 11.6959 23.6824C10.6442 22.7595 9.78021 21.6909 9.11226 20.5292Z" fill="#122E82"/>
+<mask id="mask0_1728_17015" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="7" y="1" width="20" height="23">
+<path d="M26.3786 3.52681C26.9232 3.85248 27.0342 4.57659 26.6606 5.08947L13.269 23.4718C12.8953 23.9847 12.1721 24.101 11.6951 23.6825C6.88234 19.4592 6.00123 12.1845 9.84496 6.90831C13.6887 1.63211 20.8832 0.240552 26.3786 3.52681Z" fill="#9EB3EE"/>
+</mask>
+<g mask="url(#mask0_1728_17015)">
+<g filter="url(#filter0_f_1728_17015)">
+<path d="M22.5924 10.6748L13.2698 23.4717C12.8962 23.9846 12.1729 24.1009 11.696 23.6824C10.6442 22.7595 9.78025 21.6908 9.1123 20.5292L18.4349 7.73227C18.8086 7.21939 19.5318 7.10304 20.0088 7.52157C21.0605 8.44449 21.9245 9.51313 22.5924 10.6748Z" fill="#122E82"/>
+</g>
+</g>
+<g filter="url(#filter1_i_1728_17015)">
+<path d="M26.3786 3.52662C26.9232 3.85229 27.0342 4.57641 26.6606 5.08929L13.269 23.4716C12.8953 23.9845 12.1721 24.1008 11.6951 23.6823C6.88234 19.459 6.00123 12.1843 9.84496 6.90812C13.6887 1.63193 20.8832 0.240369 26.3786 3.52662Z" fill="#9EB3EE" fill-opacity="0.4"/>
+</g>
+<defs>
+<filter id="filter0_f_1728_17015" x="6.44576" y="4.60042" width="18.8131" height="22.0031" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1.33327" result="effect1_foregroundBlur_1728_17015"/>
+</filter>
+<filter id="filter1_i_1728_17015" x="7.44336" y="1.58675" width="19.6084" height="22.3501" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="0.172342" dy="-0.172342"/>
+<feGaussianBlur stdDeviation="0.287237"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_1728_17015"/>
+</filter>
+</defs>
+</svg>

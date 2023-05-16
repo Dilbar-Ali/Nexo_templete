@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { links } from "./Mylinks";
+// import image from "../../../1/ada.svg";
 
 const NavLinks = () => {
   const [heading, setHeading] = useState("");
@@ -31,27 +32,46 @@ const NavLinks = () => {
             </h1>
             {link.submenu && (
               <div>
-                <div className="absolute top-10  hidden group-hover:md:block hover:md:block">
+                <div className="absolute top-10 hidden group-hover:md:block hover:md:block">
                   <div className="py-3">
                     <div
-                      className="w-4 h-4 left-3 absolute 
-                    mt-1 bg-white rotate-45"
+                      className="w-4 h-4 left-4 rounded-sm absolute 
+                    mt-2 bg-white rotate-45"
                     ></div>
                   </div>
-                  <div className="bg-white rounded-md  p-5 grid grid-cols-3 gap-10">
+                  {/* ... */}
+
+                  <div className="bg-white rounded-xl  p-5 grid grid-cols-3 gap-4">
                     {link.sublinks.map((mysublinks) => (
                       <div>
-                        <h1 className="text-lg font-semibold">
+                        {/* <h1 className="text-lg font-semibold text-black">
                           {mysublinks.Head}
-                        </h1>
+                        </h1> */}
+
+                        {/* Icons portions */}
                         {mysublinks.sublink.map((slink) => (
                           <li className="text-sm text-gray-600 my-2.5">
-                            <Link
-                              to={slink.link}
-                              className="hover:text-primary"
-                            >
-                              {slink.name}
-                            </Link>
+                            <ul className="flex  flex-wrap px-9  gap-3 justify-center items-center">
+                             
+                              <li>
+                                <Link
+                                  to={slink.link}
+                                  className="hover:text-primary"
+                                >
+                                  {slink.name}
+                                </Link>
+                              </li>
+                             
+                              <li>
+                                <Link
+                                  to={slink.link}
+                                  className="hover:text-primary"
+                                >
+                                  {slink.name1}
+                                </Link>
+                              </li>
+                             
+                            </ul>
                           </li>
                         ))}
                       </div>
@@ -97,7 +117,7 @@ const NavLinks = () => {
                     }`}
                   >
                     {slinks.sublink.map((slink) => (
-                      <li className="py-3 pl-14">
+                      <li className="py-3 text-white pl-14">
                         <Link to={slink.link}>{slink.name}</Link>
                       </li>
                     ))}
